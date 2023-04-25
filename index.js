@@ -60,6 +60,25 @@ const dateFrom = new Date(500000)
 const dateTo = new Date(1000000000)
 const counter = (from, to) => {
     /* provide your code here */
+    const fromSecond = Date.parse(from.toString());
+    const toSecond = Date.parse(to.toString());
+    //get time difference between to dates, convert from milliseconds to seconds
+    let diff = (toSecond - fromSecond) / 1000;
+
+    let days, hours, mins, seconds;
+    days = Math.floor(diff / (24 * 60 * 60));
+
+    //get hours
+    diff = diff % (24 * 60 * 60);
+    hours = Math.floor(diff / (60 * 60));
+
+    //get mins
+    diff = diff % (60 * 60);
+    mins = Math.floor(diff / 60);
+
+    //time difference left now is seconds
+    seconds = diff % 60
+    return `time difference: ${days} days - ${hours} hours - ${mins} minutes - ${seconds} seconds`;
 }
 const timer = counter(dateFrom, dateTo)
 console.log(timer)
@@ -89,11 +108,20 @@ If the debounced function is called again within the delay time, the timer shoul
 Your solution should be implemented in JavaScript without using any third-party libraries or frameworks. */
 const debounce = (callback, timer) => {
     //Your code goes here
+    let timeout;
+    return () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            callback();
+        }, timer);
+    }
 }
 
 //This is the test code for the debounce function
+const testFunc = debounce(() => console.log("this should print out only once"), 1000)
 for (let i = 0; i < 5; i++) {
-    debounce(() => console.log("this should print out only once"), 1000)
+    //debounce(() => console.log("this should print out only once"), 1000)
+    testFunc();
 }
 
 /* 6. Create a function called cacheFunc that takes another function as an argument and returns a new function. 
