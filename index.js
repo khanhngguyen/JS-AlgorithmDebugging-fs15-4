@@ -92,6 +92,12 @@ to array, and so on.
 
 const generateNewFolderName = (existingFolders) => {
     /*  provide your code here */
+    if (existingFolders.length == 0) {
+        existingFolders.push('New Folder');
+    } else {
+        existingFolders.push(`New Folder (${existingFolders.length})`);
+    }
+    return existingFolders;
 }
 
 let folder = []
