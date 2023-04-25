@@ -4,12 +4,13 @@ from 0 to 100
  */
 
 const printNum = () => {
-    for (var i = 0; i <= 100; i++) {
+    for (let i = 0; i <= 100; i++) {
         setTimeout(() => console.log(i), 1000)
     }
 }
 
 printNum()
+//change var to let
 
 /*
 2. Given the array below:
@@ -25,6 +26,27 @@ possibility.
 let myArr = ['12-24-2014', '09-2022-23', '12-30-2021', '08-02-2021', '07-15-2018', '2019-12-14', '2022-14-12']
 const fixDate = (array) => {
     /* provide your code here */
+    return array.map(date => {
+        let dateStr = date.split('-');
+        //dateStr = ['', '', '']
+        //find year
+        let yearIndex = dateStr.findIndex(str => str.length == 4);
+        let year = dateStr[yearIndex];
+        dateStr.splice(yearIndex, 1);
+        //now dateStr = ['', ''] with month & day 
+        //find month, day. Assume that month < day
+        let day, month;
+        if (dateStr[0] < dateStr[1]) {
+            month = dateStr[0];
+            day = dateStr[1]
+        }
+        else {
+            month = dateStr[1];
+            day = dateStr[0]
+        }
+
+        return `${day}-${month}-${year}`;
+        })
 }
 let newArr = fixDate(myArr)
 console.log(newArr)
