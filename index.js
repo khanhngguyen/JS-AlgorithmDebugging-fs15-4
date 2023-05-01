@@ -173,7 +173,7 @@ const createRecipe = (name, instructions) => {
     return {
         name,
         instructions,
-        printInstructions: () => {
+        printInstructions: function () {
             console.log(`Instructions for ${this.name}:`)
             console.log(this.instructions + `for ${this.time} seconds. Contain ${this.calories} calories`)
         }
@@ -181,7 +181,18 @@ const createRecipe = (name, instructions) => {
 }
 
 const withMetrics = (time, calories) => {
-
+    return function(obj) {
+        //obj = { name, instructions, printInstructions}
+        const context = {
+            name: obj.name,
+            instructions: obj.instructions,
+            time,
+            calories
+        }
+        const boundPrintInstructions = obj.printInstructions.bind(context);
+        const result = { printInstructions: boundPrintInstructions };
+        return result;
+    }
 }
 
 const pancakeRecipe = withMetrics(30, 200)(createRecipe('Pancakes', 'Mix flour, eggs, and milk. Cook on a griddle.'))
